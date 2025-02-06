@@ -424,9 +424,9 @@ chi2 <- sum((ntheo-nobs)^2/ntheo)
 # N ~ Geom(p), sitting on N={0,1,2,3,...}
 # X ~ Exp(beta)
 
-p      <- 0.2
+p      <- 0.1
 beta   <- 1/4
-nmax <- 500 # the maximum value of S we will consider (at least for the graphs)
+nmax <- 250 # the maximum value of S we will consider (at least for the graphs)
 # discretization of the exponential rv
 f.C   <-  ddexp(0:nmax, beta)      # min. Cramer distance
 f.S   <- dgeom(0:nmax,1-exp(-beta)) # preservation of the cdf at integer values
@@ -460,15 +460,14 @@ G[1]   <- dgeom(0,p) # P(S<=0)=p
 G[2:(nmax+1)] <- p + (1-exp(-beta*p*(1:nmax)))*(1-p)
 ##### ERRORS #####
 par(mai=c(.6,.8,.1,.5),mgp=c(2,1,0),las=2)
-plot(0:nmax, abs(gg.S-G), col="red",pch=19,ylab="",xlab="x",xlim=c(0,500),las=2)
+plot(0:nmax, abs(gg.S-G), col="red",pch=19,ylab="",xlab="x",xlim=c(0,nmax),las=2)
 points(0:nmax, abs(gg.C-G), col="blue",pch=0)
 abline(h=0, lty=3)
 legend.text <-c("geometric","new discr.exp","true cdf")
 legend.col <- c("red","blue","green")
-legend(legend.text,x="right",col=legend.col,pch=c(19,0,1),bty="n",inset=0.05)
+legend(legend.text,x="right",col=legend.col,pch=c(19,0,1),bty="n",inset=0.05,cex=1.25)
 mtext(text=expression(abs(F[S]-F[tilde(S)])),side=2,line=1)
 sc <- 1/max(abs(gg.S-G))
 #
 points(0:nmax, G[1:(nmax+1)]/sc, col="green")
-ax <- seq(0,0.05,0.01)
 axis(4, at=c(0,1/2/sc,1/sc), labels=c(0,0.5,1), las=2, col.axis="green")
